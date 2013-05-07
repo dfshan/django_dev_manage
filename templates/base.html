@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>特种设备预约系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/arial.js"></script>
+<script type="text/javascript" src="js/cuf_run.js"></script>
+<!-- CuFon ends -->
+</head>
+<body>
+<div class="main">
+
+  <div class="header">
+    <div class="header_resize">
+      <div class="logo"><h1><a href="index.html"><span>特种设备</span>预约系统</a></h1></div>
+      <div class="menu_nav">
+        <ul>
+			<li {%block index %}{%endblock%} ><a href="index.html"><span><span>主页</span></span></a></li>
+			<li {%block per_info %}{%endblock%} ><a href="person.html"><span><span>个人信息</span></span></a></li>
+			<li {%block inq_dev %}{%endblock%} ><a href="about.html"><span><span>查询设备</span></span></a></li>
+			<li {%block ord_dev %}{%endblock%} ><a href="blog.html"><span><span>预约设备</span></span></a></li>
+			<li {%block about %}{%endblock%} ><a href="contact.html"><span><span>关于</span></span></a></li>
+        </ul>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+
+  <div class="hbg">&nbsp;</div>
+
+  <div class="content">
+    <div class="content_resize">
+      <div class="mainbar">
+      {% block mainbar %} {% endblock %}
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  
+  <div class="sidebar">
+    {% block sidebar %} {% endblock %}
+  </div>
+    
+  <div class="fbg">
+    <div class="fbg_resize">
+      <div class="col c1">
+      </div>
+      <div class="col c2">
+      <ul class="sb_menu">
+      </ul>
+      </div>
+      <div class="col c3">
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer_resize">
+      <p class="lf">© Copyright <a href="http://www.xjtu.edu.cn/" target="_blank">西安交通大学</a>. <a href="http://www.cs.xjtu.edu.cn/"  target="_blank">计算机系</a></p>
+      <ul class="fmenu">
+        <li class="active"><a href="index.html">主页</a></li>
+        <li><a href="support.html">个人信息</a></li>
+        <li><a href="blog.html">查询设备</a></li>
+        <li><a href="about.html">预约设备</a></li>
+        <li><a href="contact.html">关于</a></li>
+      </ul>
+      <div class="clr"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

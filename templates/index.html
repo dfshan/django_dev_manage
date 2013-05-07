@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block index %} class="active" {% endblock %}
+
+
+{% block mainbar %}
+	<div class="article" align="center">
+	<h2>
+		<form action="/subLogin/" method="post">
+			{%csrf_token%}<br>
+			<table>
+			<tr>
+			<td>用户名:</td><td><input type="text" name="username"></td>
+			</tr>
+			<tr>
+			<td>密码: </td><td><input type="password" name="password"></td>
+			</tr>
+			<td><input type="submit" value="提交"></td><td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" value="重置"></td>
+			</table>
+		</form>
+	</h2>
+	</div>
+{% endblock %}
