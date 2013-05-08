@@ -18,7 +18,12 @@ urlpatterns = patterns('',
     url( r'^index/', direct_to_template, {
         'template':'index.html'
         }),
-    url( r'^login/', direct_to_template, {
-        'template':'login.html'
-        }),
+    #url( r'^login/', direct_to_template, {
+    #    'template':'login.html'
+    #    }),
+    #url( r'^sub_login/', 'django_dev_manage.views.user_login' ),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', { 'next_page':'/index/' }),
+    url(r'^person/$', 'device.views.per_info' ),
+    url( r'^chg_usr/$', 'django_dev_manage.views.change_user' ),
 )

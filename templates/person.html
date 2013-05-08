@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block per_info %}
+	class="active"
+{% endblock %}
+
+{% block mainbar %}
+	<div class="article">
+		<form action="/chg_usr/" method="post">
+		{% csrf_token %}
+		<h3><table>
+			<tr>
+				<td>用户名:</td>
+				<td>{{ username }}</td>
+			</tr>
+			<tr>
+				<td>修改密码：</td>
+				<td><input type="password" name="password" ></tr>
+			</tr>
+			<tr>
+				<td>重复密码：</td>
+				<td><input type="password" name="re_paw"></td>
+			</tr>
+			<tr>
+				<td>E-mail:</td>
+				<td><input type="text" name="email" value="{{ email }}"</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td><input type="submit" value="提交修改"></input>
+			</tr>
+		</table></h3>
+		</form>
+	</div>
+{% endblock %}

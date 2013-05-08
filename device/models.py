@@ -8,7 +8,7 @@ class User( models.Model ):
     # userId = models.IntegerField( primary_key = True )
     # name = models.CharField( max_length = 20 )
     # email = models.EmailField( blank = True )
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, primary_key = True )
     phone_number = PhoneNumberField( blank = True )
     def __unicode__(self):
         return self.user.username

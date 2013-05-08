@@ -1,23 +1,32 @@
 {% extends "base.html" %}
+{% load url from future %}
 
 
 {% block mainbar %}
 	<div class="article" align="center">
 	<h2>
-		<form action="/sub_login/" method="post">
+		{% if form.errors %}
+			<p><font color="#FF0000">用户名或密码错误</font></p>
+		{% endif %}
+		<form action="{% url 'django.contrib.auth.views.login' %}" method="post">
 			{%csrf_token%}<br>
 			<table>
-			<tr>
-			<td>用户名:</td><td><input type="text" name="username"></td>
-			</tr>
-			<tr>
-			<td>密码: </td><td><input type="password" name="password"></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td><td></td>
-			</tr>
-			<td><input type="submit" value="提交"></td><td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" value="重置"></td>
+				<tr>
+					<td>{{ form.username.label_tag }}</td>
+					<td>{{ form.username }}</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>{{ form.password.label_tag }}</td>
+					<td>{{ form.password }}</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td><input type="submit" value="提交"></td>
+					<td><input type="reset" value="重置"></td>
+				<tr>
 			</table>
+			<input type="hidden" name="next" value="/index/" />
 		</form>
 	</h2>
 	</div>
