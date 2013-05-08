@@ -4,23 +4,19 @@
 
 
 {% block mainbar %}
-	<div class="article" align="center">
-	<h2>
-		<form action="/subLogin/" method="post">
-			{%csrf_token%}<br>
-			<table>
-			<tr>
-			<td>用户名:</td><td><input type="text" name="username"></td>
-			</tr>
-			<tr>
-			<td>密码: </td><td><input type="password" name="password"></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td><td></td>
-			</tr>
-			<td><input type="submit" value="提交"></td><td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" value="重置"></td>
-			</table>
-		</form>
-	</h2>
+	<div class="article">
+		<h2><span>特种设备</span>预约系统</h2><div class="clr"></div>
+		<p><strong>特种设备预约系统是由西安交通大学计算机系开发的，可以进行特种设备的查询，网上预约，有偿使用，自动化管理，使用效率分析的系统，以达到开放式管理，在设备有效期内充分发挥设备使用频率和作用。实现校内外用户的分时共享。</strong></p>
+	</div>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+
+{% block sidebar %}
+	<div class="gadget">
+		<h2 class="star"><span>用户</span>登录</h2><div class="clr"></div>
+		<ul class = "sb_menu" >
+			<li>您尚未登录，请<a href="/login/">登录</a></li>
+			<li>还没有帐号？<a href="/register/">注册</a></li>
+		</ul>
 	</div>
 {% endblock %}
