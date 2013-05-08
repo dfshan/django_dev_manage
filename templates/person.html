@@ -8,6 +8,9 @@
 	<div class="article">
 		<form action="/chg_usr/" method="post">
 		{% csrf_token %}
+		{% if error %}
+			<p><font color="red"> {{error}} </font></p>
+		{% endif %}
 		<h3><table>
 			<tr>
 				<td>用户名:</td>
