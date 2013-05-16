@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block ord_dev %}
+	class="active"
+{% endblock %}
+{% block mainbar %}
+<div class="article">
+{% if not user.is_authenticated %}
+	<h3><font color="red">您尚未登录，请先<a href="/login/">登录</a></font></h3>
+{% else %}	
+	<h3><table cellpadding=10>	
+	<tr>
+		<th>设备名称</th>
+		<th>设备价格(元)</th>
+		<th>租借单价(元/小时)</th>
+	</tr>
+	<tr>
+		<td>{{ dev.name }}</td>
+		<td>{{ dev.price }}</td>
+		<td>{{ dev.costPerHour }}</td>
+	</tr>
+	<tr>
+	</table></h3>
+	<form action="/ord_dev/" method=post>
+		<h3>
+			开始时间：<input type="text" id="d241" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})" class="Wdate" style="width:300px"/><br><br>
+			结束时间：<input type="text" id="d241" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})" class="Wdate" style="width:300px"/>
+		</h3>
+	{% csrf_token %}	
+{% endif %}
+</div>
+{% endblock %}
+	

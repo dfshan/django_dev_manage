@@ -24,6 +24,13 @@ urlpatterns = patterns('',
     #url( r'^sub_login/', 'django_dev_manage.views.user_login' ),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     url(r'^logout/$', 'django.contrib.auth.views.logout', { 'next_page':'/index/' }),
-    url(r'^person/$', 'device.views.per_info' ),
+    url(r'^person/$', 'django_dev_manage.views.per_info' ),
     url( r'^chg_usr/$', 'django_dev_manage.views.change_user' ),
+    url( r'^register/$', direct_to_template,{
+        'template':'register.html'
+        }),
+    url( r'^add_usr/$', 'django_dev_manage.views.add_user' ),
+    url( r'^inq_dev/$', 'device.views.get_device' ),
+    url( r'^ord_dev_page/$', 'device.views.ord_dev_page' ),
+   # url( r'^ord_dev/$', 'device.views.ord_device' ),
 )
