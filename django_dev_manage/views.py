@@ -2,10 +2,12 @@
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as User2
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 from django.core.validators import email_re
+from phonenumber_field.phonenumber import PhoneNumber, to_python
+from device.models import User
 
 @csrf_protect
 def change_user( request ):
@@ -15,10 +17,12 @@ def change_user( request ):
     check = check_user( request )
     if check:
         return check
-    user = User.objects.get( username__exact = request.user.username )
+    user = User2.objects.get( username__exact = request.user.username )
     psw = request.POST[ 'password' ]
     re_psw = request.POST[ 're_paw' ]
     email = request.POST[ 'email' ]
+    phone = to_python( request.POST[ 'phone' ] )
+
     error = ''
     if ( len(psw) > 0  ) and ( cmp( psw, re_psw ) == 0 ):
         user.set_password( psw )
@@ -28,6 +32,11 @@ def change_user( request ):
         user.email = email
     else:
         error = u'请输入正确的邮箱'
+    if not  phone.is_valid():
+        error = u'请输入正确的电话号码（例如+8613012345678）'
+    else:
+        user.user.phone_number = phone
+
     user.save()
     if not error:
         error = u'成功修改个人信息'
@@ -59,6 +68,9 @@ def add_user(request):
     email = request.POST[ 'email' ]
     psw = request.POST[ 'password' ]
     re_psw = request.POST[ 're_paw' ]
+    phone = to_python( request.POST[ 'phone' ] )
+    
+
     error = ''
     if len(uname) == 0:
         error = u'请输入用户名'
@@ -66,13 +78,18 @@ def add_user(request):
         error = u'请输入正确的邮箱'
     elif cmp( psw, re_psw ) != 0:
         error = u'两次密码输入不一致'
+    elif not  phone.is_valid():
+        error = u'请输入正确的电话号码（例如+8613012345678）'
     else:
-        user = User.objects.create_user( uname, email, psw )
+        user2 = User2.objects.create_user( uname, email, psw )
+        user = User( user=user2, phone_number=phone )
+        user.save()
         error = u'注册成功'
 
     return render_to_response( 'register.html', {
         'username':uname,
         'email':email,
+        'phone':str(phone),
         'user':request.user,
         'error':error
         }, context_instance=RequestContext(request) );
@@ -91,11 +108,15 @@ def per_info( request ):
     display the person infomation
     '''
     check = check_user(request)
+    user = User2.objects.get( username__exact = request.user.username )
+    phone = user.user.phone_number
     if check:
         return check
+
     return render_to_response( 'person.html', {
             'username':request.user.username,
             'email':request.user.email,
+            'phone':str(phone),
             'user':request.user
         }, context_instance=RequestContext(request) )
     

@@ -11,19 +11,28 @@
 {% if error %}
 	<h2><p><font color="red">{{ error }}</font></p></h2>
 {% endif %}
-	<h3><table cellpadding=10>	
+	<h2><span><font color="green">设备预约情况：</font></span></h2><div class="clr"></div>
+{% if ord_time_list %}
+	<h3>
+	<table>
 	<tr>
-		<th>设备名称</th>
-		<th>设备价格(元)</th>
-		<th>租借单价(元/小时)</th>
+		<th>预约人</th>
+		<th>开始时间</th>
+		<th>结束时间</th>
 	</tr>
+	{% for ord_time in ord_time_list %}
 	<tr>
-		<td>{{ dev.name }}</td>
-		<td>{{ dev.price }}</td>
-		<td>{{ dev.costPerHour }}</td>
+		<td>{{ ord_time.user.user.username }}</td>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ord_time.startTime }}&nbsp;&nbsp;&nbsp;</td>
+		<td>&nbsp;&nbsp;&nbsp;{{ ord_time.endTime }}&nbsp;&nbsp;&nbsp;</td>
 	</tr>
-	<tr>
-	</table></h3>
+	{% endfor %}
+	</table>
+	</h3>
+{% else %}
+	<p>目前无人预约此设备</p>
+{% endif %}
+
 	<form action="/ord_dev/" method="post">
 	{% csrf_token %}	
 		<h3><table>
@@ -45,3 +54,13 @@
 </div>
 {% endblock %}
 	
+{% block sidebar %}
+	<div class="gadget">
+		<h2 class="star"><span>设备信息</span></h2><div class="clr"></div>
+		<ul class="ex_menu">
+			<li>设备名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ dev.name }} </li>
+			<li>设备价格(元)：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ dev.price }}</li>
+			<li>预约价格(元/小时)：{{ dev.costPerHour }}</li>
+		</ul>
+	</div>
+{% endblock %}

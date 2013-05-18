@@ -28,8 +28,11 @@ def ord_dev_page(request):
         return check
     if 'id' in request.GET:
         dev = Device.objects.get( id = request.GET['id'] )
+        ord_time = OrderTime.objects.filter( dev = dev )
+
         return render_to_response( 'ord_dev.html', {
                     'dev': dev,
+                    'ord_time_list': ord_time,
                     'user': request.user
         }, context_instance=RequestContext(request) )
 
@@ -54,25 +57,25 @@ def ord_device(request):
     error = ''
     if st_time >= ed_time or st_time < datetime.now():
         error='请输入一个正确的时间！'
-        return render_to_response( 'ord_dev.html', {
-                'error':error,
-                'dev': dev,
-                'user': request.user
-            }, context_instance=RequestContext(request))
     
+    if not error:
+        for time in ord_time:
+            if ( time.startTime <= st_time < time.endTime ) or ( time.startTime < ed_time <= time.edTime ):
+                error = "当前时间段，设备已经被预定，请选择其它时间！"
+
+    if not error:
+        OrderTime( startTime=st_time, endTime = ed_time, user = user, dev=dev ).save()
+        error = '预约成功'
+        ord_time = OrderTime.objects.filter( dev=dev )
+
     for time in ord_time:
-        if ( time.startTime <= st_time < time.endTime ) or ( time.startTime < ed_time <= time.edTime ):
-            error = "当前时间段，设备已经被预定，请选择其它时间！"
-            return render_to_response( 'ord_dev.html', {
-                    'error':error,
-                    'dev': dev,
-                    'user': request.user
-            }, context_instance=RequestContext(request))
-    OrderTime( startTime=st_time, endTime = ed_time, user = user, dev=dev ).save()
-    error = '预约成功'
+        time.startTime = time.startTime.strftime( '%Y-%m-%d %H:%M:%S' )
+        time.endTime = time.endTime.strftime( '%Y-%m-%d %H:%M:%S' )
+
     return render_to_response( 'ord_dev.html', {
                 'error':error,
                 'dev': dev,
+                'ord_time_list':ord_time,
                 'user': request.user
             }, context_instance=RequestContext(request))
     
