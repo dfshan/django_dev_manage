@@ -27,4 +27,4 @@ class OrderTime( models.Model ):
     user = models.ForeignKey( User )
     dev = models.ForeignKey( Device )
     def __unicode__(self):
-        return u"Device %s used by %s from %s to %s" % dev, user, startTime, endTime
+        return u"Device %s used by %s from %s to %s" % ( self.dev, self.user, self.startTime, self.endTime )

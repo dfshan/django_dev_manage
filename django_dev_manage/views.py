@@ -39,6 +39,7 @@ def change_user( request ):
         'error':error
         }, context_instance=RequestContext(request) );
 
+@csrf_protect
 def check_user( request ):
     '''
     check whether the user is authenticated.

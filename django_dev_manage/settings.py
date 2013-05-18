@@ -1,5 +1,4 @@
-# Django settings for django_dev_manage project.
-import os;
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -46,7 +45,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"

@@ -32,5 +32,5 @@ urlpatterns = patterns('',
     url( r'^add_usr/$', 'django_dev_manage.views.add_user' ),
     url( r'^inq_dev/$', 'device.views.get_device' ),
     url( r'^ord_dev_page/$', 'device.views.ord_dev_page' ),
-   # url( r'^ord_dev/$', 'device.views.ord_device' ),
+    url( r'^ord_dev/$', 'device.views.ord_device' ),
 )
