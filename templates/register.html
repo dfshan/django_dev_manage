@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block mainbar %}
+	<div class="article">
+{% if not user.is_authenticated %}
+		<form action="/add_usr/" method="post">
+		{% csrf_token %}
+		{% if error %}
+			<p><font color="red">{{error}}</font></p>
+		{% endif %}
+		<h3><table>
+			<tr>
+				<td>用户名:</td>
+				<td><input type="text" name="username" value="{{username}}"></td>
+			</tr>
+			<tr>
+				<td>密码：</td>
+				<td><input type="password" name="password" ></tr>
+			</tr>
+			<tr>
+				<td>重复密码：</td>
+				<td><input type="password" name="re_paw"></td>
+			</tr>
+			<tr>
+				<td>E-mail:</td>
+				<td><input type="email" name="email" value="{{ email }}"</td>
+			</tr>
+			<tr>
+				<td>联系电话:</td>
+				<td><input type="tel" name="phone" value="{{ phone }}"</td>
+			</tr>
+			<tr>
+				<td>个人描述：</td>
+				<td><textarea name="description" cols="30" rows="10">{{ description }}</textarea></td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td><input type="submit" value="注册"></input>
+				<td><input type="reset" value="重新输入"></input>
+			</tr>
+		</table></h3>
+		</form>
+{% else %}
+	<h3><font color="red">您已经有账户了哦，亲！无需注册哦！</font></h3>
+{% endif %}
+	</div>
+
+{% endblock %}

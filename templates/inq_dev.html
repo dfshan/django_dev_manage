@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block inq_dev %}
+	class="active"
+{% endblock %}
+
+{% block mainbar %}
+	<div class="article">
+		<h3><table cellpadding=10>	
+			<tr>
+				<th>设备名称</th>
+				<th>设备价格(元)</th>
+				<th>租借单价(元/小时)</th>
+				<th>详细信息</th>
+				<th>预约</th>
+			</tr>
+		{% for dev in devices %}
+			<tr>
+				<td>{{ dev.name }}</td>
+				<td>{{ dev.price }}</td>
+				<td>{{ dev.cost_per_hour }}</td>
+				<td><a href="/dev_info/?id={{dev.id}}">更多</a></td>
+				<td><a href="/ord_dev_page/?id={{dev.id}}">预约</a></td>
+			</tr>
+		{% endfor %}
+		</table></h3>
+	</div>
+{% endblock %}

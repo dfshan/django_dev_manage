@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block ord_dev %}
+	class="active"
+{% endblock %}
+{% block mainbar %}
+<div class="article">
+{% if not user.is_authenticated %}
+	<h3><font color="red">您尚未登录，请先<a href="/login/">登录</a></font></h3>
+{% else %}	
+{% if error %}
+	<h2><p><font color="red">{{ error }}</font></p></h2>
+{% endif %}
+	<h2><span><font color="green">设备预约情况：</font></span></h2><div class="clr"></div>
+{% if ord_time_list %}
+	<h3>
+	<table>
+	<tr>
+		<th>预约人</th>
+		<th>开始时间</th>
+		<th>结束时间</th>
+	</tr>
+	{% for ord_time in ord_time_list %}
+	<tr>
+		<td>{{ ord_time.user.username }}</td>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ord_time.start_time }}&nbsp;&nbsp;&nbsp;</td>
+		<td>&nbsp;&nbsp;&nbsp;{{ ord_time.end_time }}&nbsp;&nbsp;&nbsp;</td>
+	</tr>
+	{% endfor %}
+	</table>
+	</h3>
+{% else %}
+	<p>目前无人预约此设备</p>
+{% endif %}
+
+	<form action="/ord_dev/" method="post">
+	{% csrf_token %}	
+		<h3><table>
+		<tr>
+			<td>开始时间：</td>
+			<td><input type="text" name="st_time" id="d241" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate" style="width:300px"/></td>
+		</tr>
+		<tr>
+			<td>结束时间：</td>
+			<td><input type="text" name="ed_time" id="d241" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate" style="width:300px"/></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><input type="submit" value="预约"></td>
+		</tr>
+		</table></h3>
+		<input type="hidden" name="id" value="{{ dev.id }}">
+{% endif %}
+</div>
+{% endblock %}
+	
+{% block sidebar %}
+	<div class="gadget">
+		<h2 class="star"><span>设备信息</span></h2><div class="clr"></div>
+		<ul class="ex_menu">
+			<li>设备名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ dev.name }} </li>
+			<li>设备价格(元)：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ dev.price }}</li>
+			<li>预约价格(元/小时)：{{ dev.cost_per_hour }}</li>
+		</ul>
+	</div>
+{% endblock %}
