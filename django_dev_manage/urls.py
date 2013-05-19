@@ -39,4 +39,5 @@ urlpatterns = patterns('',
     url( r'^about/$', direct_to_template, {
         'template':'about.html'
         }),
+    url( r'^dev_info/$', 'device.views.device_info' ),
 )

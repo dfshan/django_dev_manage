@@ -22,9 +22,9 @@
 	</tr>
 	{% for ord_time in ord_time_list %}
 	<tr>
-		<td>{{ ord_time.user.user.username }}</td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ord_time.startTime }}&nbsp;&nbsp;&nbsp;</td>
-		<td>&nbsp;&nbsp;&nbsp;{{ ord_time.endTime }}&nbsp;&nbsp;&nbsp;</td>
+		<td>{{ ord_time.user.username }}</td>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ord_time.start_time }}&nbsp;&nbsp;&nbsp;</td>
+		<td>&nbsp;&nbsp;&nbsp;{{ ord_time.end_time }}&nbsp;&nbsp;&nbsp;</td>
 	</tr>
 	{% endfor %}
 	</table>
@@ -60,7 +60,7 @@
 		<ul class="ex_menu">
 			<li>设备名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ dev.name }} </li>
 			<li>设备价格(元)：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ dev.price }}</li>
-			<li>预约价格(元/小时)：{{ dev.costPerHour }}</li>
+			<li>预约价格(元/小时)：{{ dev.cost_per_hour }}</li>
 		</ul>
 	</div>
 {% endblock %}

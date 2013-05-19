@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block inq_dev %}
+	class="active"
+{% endblock %}
+
+{% block mainbar %}
+	<div class="article">
+		<h2><span>设备信息：</span></h2><div class="clr"></div>
+	{% if dev %}
+		<h3><table>
+		<tr>
+			<td>设备名称：</td>
+			<td>{{ dev.name }}</td>
+		</tr>
+		<tr>
+			<td>设备价格(元):</td>
+			<td>{{ dev.price }}</td>
+		</tr>
+		<tr>
+			<td>租借单价(元/小时):&nbsp;&nbsp;</td>
+			<td>{{ dev.cost_per_hour }}</td>
+		</tr>
+		<tr>
+			<td>购买时间</td>
+			<td>{{ dev.buy_date }}</td>
+		</tr>
+		<tr>
+			<td>设备描述:</td>
+			<td>{{ dev.description }}</td>
+		</tr>
+		</table></h3>
+	{% else %}
+		<p>请选择要查询的<a href="/inq_dev/">设备</a></p>
+	{% endif %}
+	</div>
+	<div class="article">
+		<h2><span><font color="green">设备预约情况：</font></span></h2><div class="clr"></div>
+	{% if ord_time_list %}
+		<h3>
+		<table>
+		<tr>
+			<th>预约人</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+		</tr>
+	{% for ord_time in ord_time_list %}
+		<tr>
+			<td>{{ ord_time.user.username }}</td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ord_time.start_time }}&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;&nbsp;&nbsp;{{ ord_time.end_time }}&nbsp;&nbsp;&nbsp;</td>
+		</tr>
+	{% endfor %}
+		</table>
+		</h3>
+	{% else %}
+		<p>目前无人预约此设备</p>
+	{% endif %}
+	</div>
+
+{% endblock %}

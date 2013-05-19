@@ -5,8 +5,8 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
-from device.models import Device, OrderTime, User as User
-from django.contrib.auth.models import User as User2
+from device.models import Device, OrderTime, UsrExd
+from django.contrib.auth.models import User
 from django_dev_manage.views import check_user
 from datetime import datetime
 
@@ -50,9 +50,8 @@ def ord_device(request):
     ed_time = datetime.strptime( ed_time, '%Y-%m-%d %H:%M:%S' )
     dev = Device.objects.get( id = int(request.POST['id'] ) )
 
-    user = User2.objects.get( username=request.user.username )
+    user = User.objects.get( username=request.user.username )
 
-    user = User.objects.get( user = user )
     ord_time = OrderTime.objects.filter( dev=dev )
     error = ''
     if st_time >= ed_time or st_time < datetime.now():
@@ -60,17 +59,17 @@ def ord_device(request):
     
     if not error:
         for time in ord_time:
-            if ( time.startTime <= st_time < time.endTime ) or ( time.startTime < ed_time <= time.edTime ):
+            if ( time.start_time <= st_time < time.end_time ) or ( time.start_time < ed_time <= time.end_time ):
                 error = "当前时间段，设备已经被预定，请选择其它时间！"
 
     if not error:
-        OrderTime( startTime=st_time, endTime = ed_time, user = user, dev=dev ).save()
+        OrderTime( start_time=st_time, end_time = ed_time, user=user, dev=dev ).save()
         error = '预约成功'
         ord_time = OrderTime.objects.filter( dev=dev )
 
     for time in ord_time:
-        time.startTime = time.startTime.strftime( '%Y-%m-%d %H:%M:%S' )
-        time.endTime = time.endTime.strftime( '%Y-%m-%d %H:%M:%S' )
+        time.start_time = time.start_time.strftime( '%Y-%m-%d %H:%M:%S' )
+        time.end_time = time.end_time.strftime( '%Y-%m-%d %H:%M:%S' )
 
     return render_to_response( 'ord_dev.html', {
                 'error':error,
@@ -80,3 +79,24 @@ def ord_device(request):
             }, context_instance=RequestContext(request))
     
 
+def device_info(request):
+    check = check_user(request)
+    if check:
+        return check
+    dev = None
+    ord_time = None
+    if 'id' in request.GET:
+        dev = Device.objects.get( id = request.GET['id'] )
+        ord_time = OrderTime.objects.filter( dev=dev )
+
+        for time in ord_time:
+            time.start_time = time.start_time.strftime( '%Y-%m-%d %H:%M:%S' )
+            time.end_time = time.end_time.strftime( '%Y-%m-%d %H:%M:%S' )
+
+        dev.buy_date = dev.buy_date.strftime( '%Y-%m-%d' )
+
+    return render_to_response( 'dev_info.html',{
+            'dev':dev,
+            'ord_time_list':ord_time,
+            'user': request.user
+        })

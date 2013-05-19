@@ -47,6 +47,8 @@
 					{% if not user.is_authenticated %}
 						<li>您尚未登录，请<a href="/login/">登录</a></li>
 						<li>还没有帐号？<a href="/register/">注册</a></li>
+						<li>&nbsp;</li>
+						<li>管理员<a href="/admin/">登录</a></li>
 					{% else	%}
 						<li>您好，<a href="/person/">{{ user.username }}</a></li>
 						<li><a href="/logout">注销</a></li>
