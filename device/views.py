@@ -9,6 +9,7 @@ from device.models import Device, OrderTime, UsrExd
 from django.contrib.auth.models import User
 from django_dev_manage.views import check_user
 from datetime import datetime
+import datetime as dt
 
 @csrf_protect
 def get_device(request):
@@ -54,7 +55,7 @@ def ord_device(request):
 
     ord_time = OrderTime.objects.filter( dev=dev )
     error = ''
-    if st_time >= ed_time or st_time < datetime.now():
+    if st_time >= ed_time or st_time < ( datetime.now() + dt.timedelta( hours=-1 ) ):
         error='请输入一个正确的时间！'
     
     if not error:
