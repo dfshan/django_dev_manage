@@ -101,3 +101,4 @@ def device_info(request):
             'ord_time_list':ord_time,
             'user': request.user
         })
+

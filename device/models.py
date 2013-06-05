@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
+from datetime import datetime
 
 # Create your models here.
 
@@ -31,6 +32,27 @@ class Device( models.Model ):
     def __unicode__(self):
         return self.name
 
+    def use_num(self):
+        ord_time = OrderTime.objects.filter( dev=self )
+        return len(ord_time)
+
+    def use_time(self):
+        ord_times = OrderTime.objects.filter( dev=self )
+        use_time = 0.0
+        for ord_time in ord_times:
+           temp = ord_time.end_time - ord_time.start_time 
+           use_time += temp.total_seconds()
+        return use_time
+
+    def get_efficiency(self):
+        temp = datetime.now().date() - self.buy_date 
+        total_time = temp.total_seconds()
+        return self.use_time() / total_time
+
+    def get_efficiency_as_string(self):
+        return '%.2f %%' % self.get_efficiency()
+
+
     class Meta:
         verbose_name = u"设备"
         verbose_name_plural = verbose_name
@@ -43,7 +65,7 @@ class OrderTime( models.Model ):
     user = models.ForeignKey( User )
     dev = models.ForeignKey( Device )
     def __unicode__(self):
-        return u"Device %s used by %s from %s to %s" % ( self.dev, self.user, self.startTime, self.endTime )
+        return u"Device %s used by %s from %s to %s" % ( self.dev, self.user, self.start_time, self.end_time )
 
     class Meta:
         verbose_name = u"预约时间"

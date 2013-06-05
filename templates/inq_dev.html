@@ -13,6 +13,8 @@
 				<th>租借单价(元/小时)</th>
 				<th>详细信息</th>
 				<th>预约</th>
+				<th>使用次数</th>
+				<th>使用效率</th>
 			</tr>
 		{% for dev in devices %}
 			<tr>
@@ -21,6 +23,8 @@
 				<td>{{ dev.cost_per_hour }}</td>
 				<td><a href="/dev_info/?id={{dev.id}}">更多</a></td>
 				<td><a href="/ord_dev_page/?id={{dev.id}}">预约</a></td>
+				<td>{{ dev.use_num }}</td>
+				<td>{{ dev.get_efficiency_as_string }}</td>
 			</tr>
 		{% endfor %}
 		</table></h3>

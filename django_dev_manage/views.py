@@ -92,7 +92,7 @@ def add_user(request):
         usr_exd.save()
         error = u'注册成功'
 
-    return render_to_response( 'register.html', {
+    return render_to_response( 'person.html', {
         'username':uname,
         'email':email,
         'phone':str(phone),
