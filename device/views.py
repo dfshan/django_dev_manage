@@ -76,12 +76,8 @@ def ord_device(request):
     if not error:
         OrderTime( start_time=st_time, end_time = ed_time, user=user, dev=dev ).save()
         error = '预约成功'
-        ord_time = OrderTime.objects.filter( dev=dev )
 
-    for time in ord_time:
-        time.start_time = time.start_time.strftime( '%Y-%m-%d %H:%M:%S' )
-        time.end_time = time.end_time.strftime( '%Y-%m-%d %H:%M:%S' )
-
+    ord_time = get_ord_time_from_now( dev )
     return render_to_response( 'ord_dev.html', {
                 'error':error,
                 'dev': dev,

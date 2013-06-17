@@ -65,7 +65,7 @@ class OrderTime( models.Model ):
     user = models.ForeignKey( User )
     dev = models.ForeignKey( Device )
     def __unicode__(self):
-        return u"Device %s used by %s from %s to %s" % ( self.dev, self.user, self.start_time, self.end_time )
+        return u"%-5s orded from %-10s to %-10s" % ( self.dev, self.start_time, self.end_time )
 
     class Meta:
         verbose_name = u"预约时间"

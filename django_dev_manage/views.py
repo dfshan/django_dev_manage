@@ -41,6 +41,7 @@ def change_user( request ):
     user.usrexd.description = description
 
     user.save()
+    user.usrexd.save()
     if not error:
         error = u'成功修改个人信息'
 
